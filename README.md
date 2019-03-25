@@ -2,13 +2,13 @@ UPDive
 ================
 Kevin Yauy, MD (Radboudumc, CHU de Montpellier)
 
+-   [Library](#library)
 -   [Single case Exome Sequencing Analysis](#single-case-exome-sequencing-analysis)
-    -   [Library](#library)
     -   [Data processing](#data-processing)
     -   [Dataframe processing](#dataframe-processing)
     -   [Data visualization](#data-visualization)
 -   [Trio Exome Sequencing Analysis](#trio-exome-sequencing-analysis)
-    -   [Library and requirements](#library-and-requirements)
+    -   [Requirements](#requirements)
     -   [Data processing](#data-processing-1)
     -   [Dataframe processing](#dataframe-processing-1)
     -   [Data visualization](#data-visualization-1)
@@ -16,7 +16,7 @@ Kevin Yauy, MD (Radboudumc, CHU de Montpellier)
     -   [Dataframe processing](#dataframe-processing-2)
     -   [Data visualization](#data-visualization-2)
 
-**UniParental Disomy Identification Validated for Exome sequencing with 27923 samples.**
+**UniParental Disomy Identification methods Validated for Exome sequencing with 27923 samples.**
 
 This is the code repository of the UPDive study to validate a UPD detection method adapted for Exome Sequencing.
 
@@ -26,21 +26,29 @@ If you want to cite us, please use :
 
 Date of publication : 2019-03-25
 
+Library
+-------
+
+Analysis have been realised with R 3.5.1, H3M2 (v2019.12.19) and UPDio V1.0.
+
+``` r
+# Data processing
+library(quantable)
+library(data.table)
+library(dplyr)
+library(reshape2)
+
+# Data visualization
+library(ggplot2)
+library(cowplot)
+library(ggpubr)
+library(karyoploteR)
+```
+
 Single case Exome Sequencing Analysis
 -------------------------------------
 
 Uniparental isodisomy could be detected by long stretch of homozygosity. Here we present code for our method using H3M2 bed output and median absolute deviation.
-
-### Library
-
-``` r
-library(quantable)
-library(ggplot2)
-library(cowplot)
-library(data.table)
-library(dplyr)
-library(ggpubr)
-```
 
 ### Data processing
 
@@ -162,7 +170,7 @@ my_plots_pubmad.3nlog <- lapply(names(df.nlog.plot), function(var_x){
 plot_grid(plotlist = my_plots_pubmad.3nlog)
 ```
 
-![](figure-markdown_github/unnamed-chunk-12-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-13-1.png)
 
 log(MAD) qqplot
 
@@ -181,7 +189,7 @@ my_plots_madqq <- lapply(names(df.nlog.plot), function(var_x){
 plot_grid(plotlist = my_plots_madqq)
 ```
 
-![](figure-markdown_github/unnamed-chunk-13-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-14-1.png)
 
 ##### MAD ROH p-value distribution results
 
@@ -191,7 +199,7 @@ p-value distribution plot
 ggplot(df.nlog, aes(x=max_ROH_log10_pvalue)) + theme_gray(base_size = 14)  + geom_dotplot(dotsize=1.2, binwidth = 0.1)  + geom_vline(xintercept = 95, colour="brown3", linetype = "longdash")
 ```
 
-![](figure-markdown_github/unnamed-chunk-14-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-15-1.png)
 
 p-value distribution plot by chromosome
 
@@ -212,19 +220,18 @@ my_plots_mad <- lapply(names(df.nlog10.plot), function(var_x){
 plot_grid(plotlist = my_plots_mad)
 ```
 
-![](figure-markdown_github/unnamed-chunk-15-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-16-1.png)
 
 Trio Exome Sequencing Analysis
 ------------------------------
 
 Both uniparental isodisomy and heterodisomy could be reported with trio analysis based on Mendelian inheritance errors. We validate this approach with [UPDio](https://github.com/findingdan/UPDio).
 
-### Library and requirements
+### Requirements
 
 ``` r
 #R Dependencies
-    library(quantsmooth)
-    library(ggplot2)
+#    library(quantsmooth), optional
 # Perl Dependencies
 #    Statistics::R (0.31)
 #    Path::Class
@@ -233,7 +240,6 @@ Both uniparental isodisomy and heterodisomy could be reported with trio analysis
 #    List::MoreUtils
 #    Math::Round
 #    Const::Fast
-# UPDio was tested using R version 3.5.1
 ```
 
 To be noticed : A file is missing to create plot. You can copy it from previous versions.
@@ -317,11 +323,12 @@ updio.log  <- as.data.frame(updio.log)
 We have the same distribution plot as previously reported.
 
 ``` r
-ggplot(updio.log, aes(x=updio.log)) + geom_dotplot(dotsize = 0.5) + theme_gray(base_size = 14)  + scale_x_continuous("UPDio -log10 p-values", breaks= c(0,20,40,60,80,100))
+#ggplot(updio.log, aes(x=updio.log)) + geom_dotplot(dotsize = 0.5) + theme_gray(base_size = 14)  + scale_x_continuous("UPDio -log10 p-values", breaks= c(0,20,40,60,80,100))
+
+ggplot(updio.log, aes(x=updio.log)) + geom_histogram() + theme_gray(base_size = 14)  + scale_x_continuous("UPDio -log10 p-values", breaks= c(0,20,40,60,80,100))
 ```
 
-![](
-figure-markdown_github/unnamed-chunk-25-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-26-1.png)
 
 UPDive results
 --------------
@@ -334,8 +341,9 @@ Merge results
 
 ``` r
 updive.plot <- df.nlog.merge %>% full_join(updio.max.merge, by = "Sample")
-
-test <- melt(data=updive.plot,id="Sample")
+colnames(updive.plot)[2] <- "ROH"
+colnames(updive.plot)[3] <- "MIE"
+updive.plot.melt <- melt(data=updive.plot,id="Sample")
 ```
 
 ### Data visualization
@@ -343,44 +351,94 @@ test <- melt(data=updive.plot,id="Sample")
 Common plot with normalized scale.
 
 ``` r
-ggplot(updive.plot) + 
-  theme_gray(base_size = 14) +
-  geom_point(aes(x=Sample,y=max_ROH_log10_pvalue), color = "#20639B") +
-  geom_point(aes(x=Sample, y=corr_log10_pvalue), color = "#ED553B" ) +
-  geom_hline(yintercept = 48, color="#173F5F", linetype = "longdash" ) +
-  theme_bw()+
-  theme(axis.text.x=element_blank(), axis.ticks.x=element_blank()) +
-  labs(x = "Samples", y = "-log10 p-value") 
-```
+#tiff("techplot.tiff", width = 1200, height = 1200,type="cairo", compression="none",res=400)
+#jpeg("techplot.jpg", width = 400, height = 400,type="windows", quality=100,res=125)
 
-![](figure-markdown_github/unnamed-chunk-31-1.png)
-
-``` r
-roh <- ggplot(updive.plot,aes(x=Sample)) + 
-  theme_gray(base_size = 14) + 
-  geom_point(aes(x=Sample,y=max_ROH_log10_pvalue,color = max_ROH_log10_pvalue)) +
-  labs(x = "Samples", y = "ROH -log10 p-value")+
-  theme_bw()+
-  theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(),legend.position = c(1.0, 0.5),legend.background=element_blank())
-
-mie <- ggplot(updive.plot,aes(x=Sample)) + 
-  theme_gray(base_size = 14) + 
-  geom_point(aes(x=Sample,y=corr_log10_pvalue,color=corr_log10_pvalue)) +
-  labs(x = "Samples", y = "UPDio corrected -log10 p-value") +
-  theme_bw()+
-  theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(),legend.position="none")
-
-ggarrange(mie,roh,labels=c("A","B"),ncol=2,nrow=1)
-```
-![](figure-markdown_github/unnamed-chunk-29-1.png)
-
-``` r
-ggplot(test, aes(x=Sample, y=value, color=value)) + 
+ggplot(updive.plot.melt, aes(x=Sample, y=value, color=value)) + 
   geom_point(na.rm = TRUE) +
   facet_grid(rows = vars(variable))  + 
   labs(x = "Samples", y = "-log10 p-value") +
   theme_bw()+
-  theme(axis.text.x=element_blank(), axis.ticks.x=element_blank())
+  theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(),legend.position="none")
 ```
 
-![](figure-markdown_github/unnamed-chunk-30-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-31-1.png)
+
+``` r
+#dev.off()
+```
+
+Karyotype plot
+
+``` r
+#tiff("karyoplot.tiff", width = 3440, height = 4000,type="cairo", compression="none",res=400)
+#jpeg("karyoplot.jpg", width = 900, height = 1200,type="windows", quality=100,res=125)
+
+
+# iupd complete #20639B segmental #3CAEA3
+# hupd complete #ED553B segmental #F6D55C
+kp <- plotKaryotype(chromosomes="autosomal", plot.type = 1)
+
+#chr1
+kpRect(kp, chr="chr1", x0=0, x1=250e6, y0=0, y1=0.1,col="#20639B",border=NA)
+kpRect(kp, chr="chr1", x0=0, x1=250e6, y0=0.2, y1=0.3,col="#20639B",border=NA)
+kpRect(kp, chr="chr1", x0=0, x1=250e6, y0=0.4, y1=0.5,col="#20639B",border=NA)
+
+#chr2
+kpRect(kp, chr="chr2", x0=0, x1=245e6, y0=0, y1=0.1,col="#20639B",border=NA)
+kpRect(kp, chr="chr2", x0=80e6, x1=245e6, y0=0.2, y1=0.3 ,col="#F6D55C",border=NA)
+
+#chr3
+kpRect(kp, chr="chr3", x0=120e6, x1=190e6, y0=0, y1=0.1,col="#F6D55C",border=NA)
+
+#chr4
+kpRect(kp, chr="chr4", x0=0, x1=190e6, y0=0, y1=0.1,col="#20639B",border=NA)
+
+#chr7
+kpRect(kp, chr="chr7", x0=0, x1=160e6, y0=0, y1=0.1,col="#20639B",border=NA)
+kpRect(kp, chr="chr7", x0=0, x1=160e6, y0=0.2, y1=0.3,col="#ED553B",border=NA)
+
+#chr8
+kpRect(kp, chr="chr8", x0=0, x1=145e6, y0=0, y1=0.1,col="#20639B",border=NA)
+kpRect(kp, chr="chr8", x0=75e6, x1=145e6, y0=0.2, y1=0.3,col="#F6D55C",border=NA)
+
+#chr10
+kpRect(kp, chr="chr10", x0=0, x1=140e6, y0=0, y1=0.1,col="#20639B",border=NA)
+
+#chr11
+kpRect(kp, chr="chr11", x0=10e6, x1=120e6, y0=0, y1=0.1,col="#3CAEA3",border=NA)
+
+#chr12
+kpRect(kp, chr="chr12", x0=0, x1=133e6, y0=0, y1=0.1,col="#20639B",border=NA)
+
+#chr13
+kpRect(kp, chr="chr13", x0=90e6, x1=110e6, y0=0, y1=0.1,col="#F6D55C",border=NA)
+
+#chr15
+kpRect(kp, chr="chr15", x0=0, x1=100e6, y0=0, y1=0.1,col="#20639B",border=NA)
+kpRect(kp, chr="chr15", x0=30e6, x1=90e6, y0=0.2, y1=0.3,col="#3CAEA3",border=NA)
+
+#chr16
+kpRect(kp, chr="chr16", x0=0, x1=15e6, y0=0, y1=0.1,col="#F6D55C",border=NA)
+
+#chr19
+kpRect(kp, chr="chr19", x0=0, x1=60e6, y0=0, y1=0.1,col="#20639B",border=NA)
+kpRect(kp, chr="chr19", x0=0, x1=60e6, y0=0.2, y1=0.3,col="#20639B",border=NA)
+
+#chr20
+kpRect(kp, chr="chr20", x0=0, x1=60e6, y0=0, y1=0.1,col="#20639B",border=NA)
+
+#chr22
+kpRect(kp, chr="chr22", x0=0, x1=50e6, y0=0, y1=0.1,col="#20639B",border=NA)
+kpRect(kp, chr="chr22", x0=30e6, x1=50e6, y0=0.2, y1=0.3,col="#F6D55C",border=NA)
+```
+
+![](README_files/figure-markdown_github/unnamed-chunk-32-1.png)
+
+``` r
+#kpAddBaseNumbers(kp, tick.dist = 10000000, tick.len = 10, tick.col="red", cex=0.5, minor.tick.dist = 1000000, minor.tick.len = 5, minor.tick.col = "gray")
+
+#kpAddCytobandLabels(kp, force.all=TRUE, srt=90, col="orange", cex=0.3)
+
+#dev.off()
+```
