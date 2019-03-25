@@ -353,7 +353,7 @@ ggplot(updive.plot) +
   labs(x = "Samples", y = "-log10 p-value") 
 ```
 
-![](figure-markdown_github/unnamed-chunk-28-1.png)
+![](figure-markdown_github/unnamed-chunk-31-1.png)
 
 ``` r
 roh <- ggplot(updive.plot,aes(x=Sample)) + 
