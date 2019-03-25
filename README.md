@@ -372,11 +372,6 @@ mie <- ggplot(updive.plot,aes(x=Sample)) +
 
 ggarrange(mie,roh,labels=c("A","B"),ncol=2,nrow=1)
 ```
-
-    ## Warning: Removed 26670 rows containing missing values (geom_point).
-
-    ## Warning: Removed 171 rows containing missing values (geom_point).
-
 ![](figure-markdown_github/unnamed-chunk-29-1.png)
 
 ``` r
