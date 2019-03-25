@@ -162,7 +162,7 @@ my_plots_pubmad.3nlog <- lapply(names(df.nlog.plot), function(var_x){
 plot_grid(plotlist = my_plots_pubmad.3nlog)
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-12-1.png)
+![](figure-markdown_github/unnamed-chunk-12-1.png)
 
 log(MAD) qqplot
 
@@ -181,7 +181,7 @@ my_plots_madqq <- lapply(names(df.nlog.plot), function(var_x){
 plot_grid(plotlist = my_plots_madqq)
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-13-1.png)
+![](figure-markdown_github/unnamed-chunk-13-1.png)
 
 ##### MAD ROH p-value distribution results
 
@@ -191,7 +191,7 @@ p-value distribution plot
 ggplot(df.nlog, aes(x=max_ROH_log10_pvalue)) + theme_gray(base_size = 14)  + geom_dotplot(dotsize=1.2, binwidth = 0.1)  + geom_vline(xintercept = 95, colour="brown3", linetype = "longdash")
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-14-1.png)
+![](figure-markdown_github/unnamed-chunk-14-1.png)
 
 p-value distribution plot by chromosome
 
@@ -212,7 +212,7 @@ my_plots_mad <- lapply(names(df.nlog10.plot), function(var_x){
 plot_grid(plotlist = my_plots_mad)
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-15-1.png)
+![](figure-markdown_github/unnamed-chunk-15-1.png)
 
 Trio Exome Sequencing Analysis
 ------------------------------
@@ -320,7 +320,8 @@ We have the same distribution plot as previously reported.
 ggplot(updio.log, aes(x=updio.log)) + geom_dotplot(dotsize = 0.5) + theme_gray(base_size = 14)  + scale_x_continuous("UPDio -log10 p-values", breaks= c(0,20,40,60,80,100))
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-25-1.png)
+![](
+figure-markdown_github/unnamed-chunk-25-1.png)
 
 UPDive results
 --------------
@@ -352,7 +353,7 @@ ggplot(updive.plot) +
   labs(x = "Samples", y = "-log10 p-value") 
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-28-1.png)
+![](figure-markdown_github/unnamed-chunk-28-1.png)
 
 ``` r
 roh <- ggplot(updive.plot,aes(x=Sample)) + 
@@ -376,7 +377,7 @@ ggarrange(mie,roh,labels=c("A","B"),ncol=2,nrow=1)
 
     ## Warning: Removed 171 rows containing missing values (geom_point).
 
-![](README_files/figure-markdown_github/unnamed-chunk-29-1.png)
+![](figure-markdown_github/unnamed-chunk-29-1.png)
 
 ``` r
 ggplot(test, aes(x=Sample, y=value, color=value)) + 
@@ -387,4 +388,4 @@ ggplot(test, aes(x=Sample, y=value, color=value)) +
   theme(axis.text.x=element_blank(), axis.ticks.x=element_blank())
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-30-1.png)
+![](figure-markdown_github/unnamed-chunk-30-1.png)
