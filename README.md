@@ -24,12 +24,12 @@ If you want to cite us, please use :
 
 > Yauy K., de Leeuw N., Gilissen C. and Pfundt R., UPDive : Uniparental disomy identification pipeline validated for exome sequencing with 27923 samples. (2019)
 
-Date of publication : 2019-03-25
+Date of publication : 2019-04-01
 
 Library
 -------
 
-Analysis have been realised with R 3.5.1, H3M2 (v2019.12.19) and UPDio V1.0.
+Analysis have been realized with R 3.5.1, H3M2 (v2019.12.19) and UPDio V1.0.
 
 ``` r
 # Data processing
@@ -211,7 +211,7 @@ my_plots_mad <- lapply(names(df.nlog10.plot), function(var_x){
     xlim(-1, 100) 
   
   if(is.numeric(df.nlog10.plot[[var_x]])) {
-    p <- p + geom_dotplot(dotsize = 1.5)   + theme_gray(base_size = 14) + theme(legend.justification=c(1,0), legend.position=c(1,0)) + geom_vline(xintercept = 95, colour="brown3", linetype = "longdash", show.legend=TRUE) 
+    p <- p + geom_dotplot(dotsize = 1.5)   + theme_gray(base_size = 14) + theme(legend.justification=c(1,0), legend.position=c(1,0)) + geom_vline(xintercept = 95, colour="brown3", linetype = "longdash") +  scale_y_continuous(name = NULL, breaks = NULL)
   } else {
     p <- p + geom_bar()
   } 
@@ -375,8 +375,8 @@ Karyotype plot
 #jpeg("karyoplot.jpg", width = 900, height = 1200,type="windows", quality=100,res=125)
 
 
-# iupd complete #20639B segmental #3CAEA3
-# hupd complete #ED553B segmental #F6D55C
+# iupd complete #20639B optional #3CAEA3
+# hupd complete #ED553B optional #F6D55C
 kp <- plotKaryotype(chromosomes="autosomal", plot.type = 1)
 
 #chr1
@@ -386,10 +386,10 @@ kpRect(kp, chr="chr1", x0=0, x1=250e6, y0=0.4, y1=0.5,col="#20639B",border=NA)
 
 #chr2
 kpRect(kp, chr="chr2", x0=0, x1=245e6, y0=0, y1=0.1,col="#20639B",border=NA)
-kpRect(kp, chr="chr2", x0=80e6, x1=245e6, y0=0.2, y1=0.3 ,col="#F6D55C",border=NA)
+kpRect(kp, chr="chr2", x0=80e6, x1=245e6, y0=0.2, y1=0.3 ,col="#ED553B",border=NA)
 
 #chr3
-kpRect(kp, chr="chr3", x0=120e6, x1=190e6, y0=0, y1=0.1,col="#F6D55C",border=NA)
+kpRect(kp, chr="chr3", x0=120e6, x1=190e6, y0=0, y1=0.1,col="#ED553B",border=NA)
 
 #chr4
 kpRect(kp, chr="chr4", x0=0, x1=190e6, y0=0, y1=0.1,col="#20639B",border=NA)
@@ -400,26 +400,26 @@ kpRect(kp, chr="chr7", x0=0, x1=160e6, y0=0.2, y1=0.3,col="#ED553B",border=NA)
 
 #chr8
 kpRect(kp, chr="chr8", x0=0, x1=145e6, y0=0, y1=0.1,col="#20639B",border=NA)
-kpRect(kp, chr="chr8", x0=75e6, x1=145e6, y0=0.2, y1=0.3,col="#F6D55C",border=NA)
+kpRect(kp, chr="chr8", x0=75e6, x1=145e6, y0=0.2, y1=0.3,col="#ED553B",border=NA)
 
 #chr10
 kpRect(kp, chr="chr10", x0=0, x1=140e6, y0=0, y1=0.1,col="#20639B",border=NA)
 
 #chr11
-kpRect(kp, chr="chr11", x0=10e6, x1=120e6, y0=0, y1=0.1,col="#3CAEA3",border=NA)
+kpRect(kp, chr="chr11", x0=10e6, x1=120e6, y0=0, y1=0.1,col="#20639B",border=NA)
 
 #chr12
 kpRect(kp, chr="chr12", x0=0, x1=133e6, y0=0, y1=0.1,col="#20639B",border=NA)
 
 #chr13
-kpRect(kp, chr="chr13", x0=90e6, x1=110e6, y0=0, y1=0.1,col="#F6D55C",border=NA)
+kpRect(kp, chr="chr13", x0=90e6, x1=110e6, y0=0, y1=0.1,col="#ED553B",border=NA)
 
 #chr15
 kpRect(kp, chr="chr15", x0=0, x1=100e6, y0=0, y1=0.1,col="#20639B",border=NA)
-kpRect(kp, chr="chr15", x0=30e6, x1=90e6, y0=0.2, y1=0.3,col="#3CAEA3",border=NA)
+kpRect(kp, chr="chr15", x0=30e6, x1=90e6, y0=0.2, y1=0.3,col="#20639B",border=NA)
 
 #chr16
-kpRect(kp, chr="chr16", x0=0, x1=15e6, y0=0, y1=0.1,col="#F6D55C",border=NA)
+kpRect(kp, chr="chr16", x0=0, x1=15e6, y0=0, y1=0.1,col="#ED553B",border=NA)
 
 #chr19
 kpRect(kp, chr="chr19", x0=0, x1=60e6, y0=0, y1=0.1,col="#20639B",border=NA)
@@ -430,7 +430,7 @@ kpRect(kp, chr="chr20", x0=0, x1=60e6, y0=0, y1=0.1,col="#20639B",border=NA)
 
 #chr22
 kpRect(kp, chr="chr22", x0=0, x1=50e6, y0=0, y1=0.1,col="#20639B",border=NA)
-kpRect(kp, chr="chr22", x0=30e6, x1=50e6, y0=0.2, y1=0.3,col="#F6D55C",border=NA)
+kpRect(kp, chr="chr22", x0=30e6, x1=50e6, y0=0.2, y1=0.3,col="#ED553B",border=NA)
 ```
 
 ![](README_files/figure-markdown_github/unnamed-chunk-32-1.png)
