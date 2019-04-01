@@ -61,9 +61,9 @@ It will calculate the sum of ROH size by chromosome and output a clean format fo
 ``` bash
 for i in /ifs/data/research/projects/kevin/UPD/ROH_raw_all/*.bed ;
 
-do printf "Sample\n$(basename "$i" | cut -d. -f1)" > /ifs/data/research/projects/kevin/UPD/ROH_all_processed/$(basename "$i" | cut -d. -f1).sample.bed ; awk -F "\t" '{l[$1]+=($3-$2)} END {for (i in l) {print i,l[i]}}' "$i" | sort -k1,1V | sed 's/ /\t/g' | awk '{for (f=1;f<=NF;f++) col[f] = col[f]":"$f} END {for (f=1;f<=NF;f++) print col[f]}' | tr ':' '\t' | paste /ifs/data/research/projects/kevin/UPD/ROH_all_processed/$(basename "$i" | cut -d. -f1).sample.bed - > /ifs/data/research/projects/kevin/UPD/ROH_all_processed/$(basename "$i" | cut -d. -f1).processed.bed ; 
+do printf "Sample\n$(basename "$i" | cut -d. -f1)" > /ifs/data/research/projects/kevin/UPD/ROH_all_processed/$(basename "$i" | cut -d. -f1).sample.bed ; awk -F "\t" '{l[$1]+=($3-$2)} END {for (i in l) {print i,l[i]}}' "$i" | sort -k1,1V | sed 's/ /\t/g' | awk '{for (f=1;f<=NF;f++) col[f] = col[f]":"$f} END {for (f=1;f<=NF;f++) print col[f]}' | tr ':' '\t' | paste /ifs/data/research/projects/kevin/UPD/ROH_all_processed/$(basename "$i" | cut -d. -f1).sample.bed - > /ifs/data/research/projects/kevin/UPD/ROH_all_processed/$(basename "$i" | cut -d. -f1).processed.bed ;
 
-rm -f /ifs/data/research/projects/kevin/UPD/ROH_all_processed/$(basename "$i" | cut -d. -f1).sample.bed ; 
+rm -f /ifs/data/research/projects/kevin/UPD/ROH_all_processed/$(basename "$i" | cut -d. -f1).sample.bed ;
 done
 ```
 
@@ -138,11 +138,11 @@ df.nlog10.plot <- -log10(df.nlog[,c(1:22)])
 
 Here are the median absolute deviation for each chromosome that we use to scale and compare the total ROH size between samples.
 
-    ##    chr1    chr2    chr3    chr4    chr5    chr6    chr7    chr8    chr9 
-    ## 5392826 6417815 6120910 6122054 5181447 5143813 4279464 4581654 4079617 
-    ##   chr10   chr11   chr12   chr13   chr14   chr15   chr16   chr17   chr18 
-    ## 3487247 3874609 3834250 6980662 4286490 2498234 3174542 2312364 4108129 
-    ##   chr19   chr20   chr21   chr22 
+    ##    chr1    chr2    chr3    chr4    chr5    chr6    chr7    chr8    chr9
+    ## 5392826 6417815 6120910 6122054 5181447 5143813 4279464 4581654 4079617
+    ##   chr10   chr11   chr12   chr13   chr14   chr15   chr16   chr17   chr18
+    ## 3487247 3874609 3834250 6980662 4286490 2498234 3174542 2312364 4108129
+    ##   chr19   chr20   chr21   chr22
     ## 1505326 2162825 1758725 1261463
 
 ##### Normal distribution validation
@@ -151,20 +151,20 @@ log(MAD) distribution with normal distribution curve plotted
 
 ``` r
 my_plots_pubmad.3nlog <- lapply(names(df.nlog.plot), function(var_x){
-  
+
   me = mean(df.nlog.plot[[var_x]],na.rm=TRUE)
   s = sd(df.nlog.plot[[var_x]], na.rm=TRUE)
   binwidth = 0.1
   n = 29723
-  p <- 
+  p <-
     ggplot(df.nlog.plot, aes(mean = me, sd = s, binwidth = binwidth, n = n)) + aes_string(var_x)
-  
+
   if(is.numeric(df.nlog.plot[[var_x]])) {
-    p <- p + geom_histogram(binwidth = binwidth,color="darkblue", fill="lightblue") + stat_function(fun = function(var_x) dnorm(var_x, mean = me, sd = s) * n * binwidth, color = "darkred", size = 1) + theme_gray(base_size = 14) 
+    p <- p + geom_histogram(binwidth = binwidth,color="darkblue", fill="lightblue") + stat_function(fun = function(var_x) dnorm(var_x, mean = me, sd = s) * n * binwidth, color = "darkred", size = 1) + theme_gray(base_size = 14)
   } else {
     p <- p + geom_bar(color="darkblue", fill="lightblue") + stat_function(fun = function(var_x) dnorm(var_x, mean = me, sd = s) * n  * binwidth, color = "darkred", size = 1)
-  } 
-  
+  }
+
 })
 
 plot_grid(plotlist = my_plots_pubmad.3nlog)
@@ -176,22 +176,22 @@ log(MAD) qqplot
 
 ``` r
 my_plots_madqq <- lapply(names(df.nlog.plot), function(var_x){
-  p <- 
+  p <-
     ggplot(df.nlog.plot, aes(sample = df.nlog.plot[[var_x]]))
-  
+
   if(is.numeric(df.nlog.plot[[var_x]])) {
     p <- p + stat_qq() + stat_qq_line() + theme_gray(base_size = 14)
   } else {
     p <- p + stat_qq() + stat_qq_line()
-  } 
-  
+  }
+
 })
 plot_grid(plotlist = my_plots_madqq)
 ```
 
 ![](README_files/figure-markdown_github/unnamed-chunk-14-1.png)
 
-##### MAD ROH p-value distribution results
+##### MAD ROH p-value results
 
 p-value dotplot plot
 
@@ -205,17 +205,17 @@ p-value dotplot plot by chromosome
 
 ``` r
 my_plots_mad <- lapply(names(df.nlog10.plot), function(var_x){
-  p <- 
+  p <-
     ggplot(df.nlog10.plot) +
     aes_string(var_x) +
-    xlim(-1, 100) 
-  
+    xlim(-1, 100)
+
   if(is.numeric(df.nlog10.plot[[var_x]])) {
     p <- p + geom_dotplot(dotsize = 1.5)   + theme_gray(base_size = 14) + theme(legend.justification=c(1,0), legend.position=c(1,0)) + geom_vline(xintercept = 95, colour="brown3", linetype = "longdash") + scale_y_continuous(name = NULL, breaks = NULL)
   } else {
     p <- p + geom_bar()
-  } 
-  
+  }
+
 })
 plot_grid(plotlist = my_plots_mad)
 ```
@@ -273,12 +273,12 @@ We launched then UPDio for all trio exome sequencing available among a list (tab
 ``` bash
 #!/bin/bash
 
-file=/ifs/data/research/projects/kevin/UPD/family_sorted_mendel.txt 
-while read -r line ; do   
+file=/ifs/data/research/projects/kevin/UPD/family_sorted_mendel.txt
+while read -r line ; do
   echo line
   echo ${line}
   echo child
-  child=$(echo "$line" | cut -f2) 
+  child=$(echo "$line" | cut -f2)
   echo ${child}
   echo dad
   dad=$(echo "$line" | cut -f3)
@@ -290,7 +290,7 @@ while read -r line ; do
 #  echo /ifs/data/research/projects/kevin/UPD/VCF_UPDio/$( echo $line | cut -f2 ).sorted.homREFed.vcf.gz
 #  echo complete mom
 #  echo /ifs/data/research/projects/kevin/UPD/VCF_UPDio/$( echo $line | cut -f4 ).sorted.homREFed.vcf.gz
-perl -I "/ifs/home/kevin/perl5/lib/perl5/" /ifs/home/kevin/UPDio/version_1.0/UPDio.pl --child_vcf /ifs/data/research/projects/kevin/UPD/VCF_UPDio/${child}.sorted.homREFed.vcf.gz  --mom_vcf /ifs/data/research/projects/kevin/UPD/VCF_UPDio/${mom}.sorted.homREFed.vcf.gz --dad_vcf /ifs/data/research/projects/kevin/UPD/VCF_UPDio/${dad}.sorted.homREFed.vcf.gz --path_to_R /cm/shared/apps/bioinf/R/3.5.1/bin/R --R_scripts_dir /ifs/home/kevin/UPDio/version_1.0/scripts --output_path /ifs/data/research/projects/kevin/UPD/VCF_UPDio_processed_cnv --include_MI --common_cnv_file /ifs/home/kevin/UPDio/version_1.0/sample_data/common_dels_1percent.tsv --child_cnv_data /ifs/data/research/projects/kevin/UPD/CNV/${child}.cnv.txt  
+perl -I "/ifs/home/kevin/perl5/lib/perl5/" /ifs/home/kevin/UPDio/version_1.0/UPDio.pl --child_vcf /ifs/data/research/projects/kevin/UPD/VCF_UPDio/${child}.sorted.homREFed.vcf.gz  --mom_vcf /ifs/data/research/projects/kevin/UPD/VCF_UPDio/${mom}.sorted.homREFed.vcf.gz --dad_vcf /ifs/data/research/projects/kevin/UPD/VCF_UPDio/${dad}.sorted.homREFed.vcf.gz --path_to_R /cm/shared/apps/bioinf/R/3.5.1/bin/R --R_scripts_dir /ifs/home/kevin/UPDio/version_1.0/scripts --output_path /ifs/data/research/projects/kevin/UPD/VCF_UPDio_processed_cnv --include_MI --common_cnv_file /ifs/home/kevin/UPDio/version_1.0/sample_data/common_dels_1percent.tsv --child_cnv_data /ifs/data/research/projects/kevin/UPD/CNV/${child}.cnv.txt
 done < $file
 ```
 
@@ -354,9 +354,9 @@ Common plot with normalized scale.
 #tiff("techplot.tiff", width = 1200, height = 1200,type="cairo", compression="none",res=400)
 #jpeg("techplot.jpg", width = 400, height = 400,type="windows", quality=100,res=125)
 
-ggplot(updive.plot.melt, aes(x=Sample, y=value, color=value)) + 
+ggplot(updive.plot.melt, aes(x=Sample, y=value, color=value)) +
   geom_point(na.rm = TRUE) +
-  facet_grid(rows = vars(variable))  + 
+  facet_grid(rows = vars(variable))  +
   labs(x = "Samples", y = "-log10 p-value") +
   theme_bw()+
   theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(),legend.position="none")
