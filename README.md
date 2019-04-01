@@ -193,15 +193,15 @@ plot_grid(plotlist = my_plots_madqq)
 
 ##### MAD ROH p-value distribution results
 
-p-value distribution plot
+p-value dotplot plot
 
 ``` r
-ggplot(df.nlog, aes(x=max_ROH_log10_pvalue)) + theme_gray(base_size = 14)  + geom_dotplot(dotsize=1.2, binwidth = 0.1)  + geom_vline(xintercept = 95, colour="brown3", linetype = "longdash")
+ggplot(df.nlog, aes(x=max_ROH_log10_pvalue)) + theme_gray(base_size = 14)  + geom_dotplot(dotsize=0.3, binwidth = 3)  + geom_vline(xintercept = 95, colour="brown3", linetype = "longdash") + scale_y_continuous(name = NULL, breaks = NULL)
 ```
 
 ![](README_files/figure-markdown_github/unnamed-chunk-15-1.png)
 
-p-value distribution plot by chromosome
+p-value dotplot plot by chromosome
 
 ``` r
 my_plots_mad <- lapply(names(df.nlog10.plot), function(var_x){
@@ -211,7 +211,7 @@ my_plots_mad <- lapply(names(df.nlog10.plot), function(var_x){
     xlim(-1, 100) 
   
   if(is.numeric(df.nlog10.plot[[var_x]])) {
-    p <- p + geom_dotplot(dotsize = 1.5)   + theme_gray(base_size = 14) + theme(legend.justification=c(1,0), legend.position=c(1,0)) + geom_vline(xintercept = 95, colour="brown3", linetype = "longdash") +  scale_y_continuous(name = NULL, breaks = NULL)
+    p <- p + geom_dotplot(dotsize = 1.5)   + theme_gray(base_size = 14) + theme(legend.justification=c(1,0), legend.position=c(1,0)) + geom_vline(xintercept = 95, colour="brown3", linetype = "longdash") + scale_y_continuous(name = NULL, breaks = NULL)
   } else {
     p <- p + geom_bar()
   } 
