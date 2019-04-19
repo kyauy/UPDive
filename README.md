@@ -16,7 +16,8 @@ Kevin Yauy, MD (Radboudumc, CHU de Montpellier)
   - [UPDive results](#updive-results)
       - [Dataframe processing](#dataframe-processing-2)
       - [Data visualization](#data-visualization-2)
-  - [UPDive for other pipelines](#updive-for-other-pipelines)
+  - [UPDive application in bioinformatics
+    pipeline](#updive-application-in-bioinformatics-pipeline)
       - [Single ES](#single-es)
       - [Trio ES](#trio-es)
 
@@ -32,7 +33,7 @@ If you want to cite us, please use :
 > disomy identification pipeline validated for exome sequencing with
 > 27923 samples. (2019)
 
-Date of publication : 2019-04-15
+Date of publication : 2019-04-19
 
 ## Library
 
@@ -277,12 +278,11 @@ approach with [UPDio](https://github.com/findingdan/UPDio).
 #    Const::Fast
 ```
 
-To be noticed : A file is missing to create plot. You can copy it from
-previous versions.
+To be noticed : I made a fork from the original repository to fix an
+annoying plot bug (change variable and legend).
 
 ``` bash
-git clone https://github.com/findingdan/UPDio
-cp ~/UPDio/version_0.9/scripts/plot_zygosity_and_events.R ~/UPDio/version_1.0/scripts/
+git clone https://github.com/kyauy/UPDio
 ```
 
 ### Data processing
@@ -298,8 +298,8 @@ for i in /ifs/data/research/projects/kevin/UPD/CNV/*calls.txt ; do tail -n+2 $i 
 
 #### UPDio calls
 
-We needed to pre-processed vcf file from Haplotype caller to be ready
-for UPDio.
+We needed to pre-processed vcf file from HaplotypeCaller to be ready for
+UPDio.
 
 ``` bash
 
@@ -483,7 +483,7 @@ kpRect(kp, chr="chr22", x0=30e6, x1=50e6, y0=0.2, y1=0.3,col="#ED553B",border=NA
 #dev.off()
 ```
 
-## UPDive for other pipelines
+## UPDive application in bioinformatics pipeline
 
 ### Single ES
 
@@ -515,5 +515,6 @@ Output directory will be the same directory as H3M2 bed file.
 
 ### Trio ES
 
-For trio ES UPD calls, we recommend to use UPDio v1.0 as we describe
-earlier and in the [UPDio github](https://github.com/findingdan/UPDio).
+For trio ES UPD calls, we recommend to use UPDio v1.0 with fixed plot R
+script available at our repository [UPDive/UPDio
+github](https://github.com/kyauy/UPDio).
