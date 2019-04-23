@@ -86,9 +86,13 @@ def H3M2_to_UPDive(input_file, updive_ref):
         print("Consanguinity suspected: the number of chromosome with MAD > 3 is " + str(output_data.UPDive_MAD[output_data['UPDive_MAD'] >= 3].count()) + ".")
         print("Interpretation of the following results may be wrong.")
     ### report significant iUPD events
-    print("Suspected Uniparental Isodisomy (iUPD) events (MAD > 22):")
+    print("Suspected Uniparental Isodisomy (iUPD) events (MAD > 22) except chr13 (MAD > 15) and chr18 (MAD >18):")
     if output_data.UPDive_MAD[output_data['UPDive_MAD'] >= 22].count() > 0:
         print(output_data[output_data['UPDive_MAD'] >= 22].to_string(index=False))
+    elif output_data.loc[output_data[sample_name] == "chr13",'UPDive_MAD'].values > 15 :
+        print(output_data.loc[output_data[sample_name] == "chr13"].to_string(index=False))
+    elif output_data.loc[output_data[sample_name] == "chr18",'UPDive_MAD'].values > 18:
+        print(output_data.loc[output_data[sample_name] == "chr18"].to_string(index=False))
     else:
         print("No suspected iUPD.")
     sys.stdout.close()
