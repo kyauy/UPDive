@@ -33,7 +33,7 @@ If you want to cite us, please use :
 > disomy identification pipeline validated for exome sequencing with
 > 27923 samples. (2019)
 
-Date of publication : 2019-04-19
+Date of publication : 2019-04-25
 
 ## Library
 
@@ -426,10 +426,11 @@ kpRect(kp, chr="chr1", x0=0, x1=250e6, y0=0.4, y1=0.5,col="#20639B",border=NA)
 
 #chr2
 kpRect(kp, chr="chr2", x0=0, x1=245e6, y0=0, y1=0.1,col="#20639B",border=NA)
-kpRect(kp, chr="chr2", x0=80e6, x1=245e6, y0=0.2, y1=0.3 ,col="#ED553B",border=NA)
+kpRect(kp, chr="chr2", x0=0, x1=80e6, y0=0.2, y1=0.3 ,col="#ED553B",border=NA)
+kpRect(kp, chr="chr2", x0=80e6, x1=245e6, y0=0.2, y1=0.3 ,col="#20639B",border=NA)
 
 #chr3
-kpRect(kp, chr="chr3", x0=120e6, x1=190e6, y0=0, y1=0.1,col="#ED553B",border=NA)
+kpRect(kp, chr="chr3", x0=120e6, x1=190e6, y0=0, y1=0.1,col="#20639B",border=NA)
 
 #chr4
 kpRect(kp, chr="chr4", x0=0, x1=190e6, y0=0, y1=0.1,col="#20639B",border=NA)
@@ -440,7 +441,7 @@ kpRect(kp, chr="chr7", x0=0, x1=160e6, y0=0.2, y1=0.3,col="#ED553B",border=NA)
 
 #chr8
 kpRect(kp, chr="chr8", x0=0, x1=145e6, y0=0, y1=0.1,col="#20639B",border=NA)
-kpRect(kp, chr="chr8", x0=75e6, x1=145e6, y0=0.2, y1=0.3,col="#ED553B",border=NA)
+kpRect(kp, chr="chr8", x0=75e6, x1=145e6, y0=0.2, y1=0.3,col="#20639B",border=NA)
 
 #chr10
 kpRect(kp, chr="chr10", x0=0, x1=140e6, y0=0, y1=0.1,col="#20639B",border=NA)
@@ -452,7 +453,7 @@ kpRect(kp, chr="chr11", x0=10e6, x1=120e6, y0=0, y1=0.1,col="#20639B",border=NA)
 kpRect(kp, chr="chr12", x0=0, x1=133e6, y0=0, y1=0.1,col="#20639B",border=NA)
 
 #chr13
-kpRect(kp, chr="chr13", x0=90e6, x1=110e6, y0=0, y1=0.1,col="#ED553B",border=NA)
+kpRect(kp, chr="chr13", x0=90e6, x1=115e6, y0=0, y1=0.1,col="#20639B",border=NA)
 
 #chr15
 kpRect(kp, chr="chr15", x0=0, x1=100e6, y0=0, y1=0.1,col="#20639B",border=NA)
@@ -460,6 +461,7 @@ kpRect(kp, chr="chr15", x0=30e6, x1=90e6, y0=0.2, y1=0.3,col="#20639B",border=NA
 
 #chr16
 kpRect(kp, chr="chr16", x0=0, x1=15e6, y0=0, y1=0.1,col="#ED553B",border=NA)
+kpRect(kp, chr="chr16", x0=15e6, x1=90e6, y0=0, y1=0.1,col="#20639B",border=NA)
 
 #chr19
 kpRect(kp, chr="chr19", x0=0, x1=60e6, y0=0, y1=0.1,col="#20639B",border=NA)
@@ -470,7 +472,8 @@ kpRect(kp, chr="chr20", x0=0, x1=60e6, y0=0, y1=0.1,col="#20639B",border=NA)
 
 #chr22
 kpRect(kp, chr="chr22", x0=0, x1=50e6, y0=0, y1=0.1,col="#20639B",border=NA)
-kpRect(kp, chr="chr22", x0=30e6, x1=50e6, y0=0.2, y1=0.3,col="#ED553B",border=NA)
+kpRect(kp, chr="chr22", x0=0, x1=25e6, y0=0.2, y1=0.3,col="#ED553B",border=NA)
+kpRect(kp, chr="chr22", x0=25e6, x1=50e6, y0=0.2, y1=0.3,col="#20639B",border=NA)
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-30-1.png)<!-- -->
