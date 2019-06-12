@@ -29,11 +29,11 @@ detection method adapted for Exome Sequencing.
 
 If you want to cite us, please use :
 
-> Yauy K., de Leeuw N., Gilissen C. and Pfundt R., UPDive : Uniparental
-> disomy identification pipeline validated for exome sequencing with
-> 27923 samples. (2019)
+> Yauy K., de Leeuw N., Yntema H.G, Pfundt R. and Gilissen C. Accurate detection of clinically relevant uniparental disomy from exome sequencing data. (2019)
 
-Date of publication : 2019-04-25
+You can find our poster presentation at ESHG 2019 uploaded on this repository.
+
+Date of publication : 2019-06-12
 
 ## Library
 
